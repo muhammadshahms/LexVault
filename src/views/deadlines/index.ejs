@@ -1,0 +1,45 @@
+<div class="page-header">
+  <div class="page-header-left">
+    <h1>Deadlines</h1>
+    <p>Track upcoming case deadlines</p>
+  </div>
+</div>
+
+<% if (deadlines.length > 0) { %>
+  <div class="deadline-list">
+    <% deadlines.forEach(function(d) { %>
+      <a href="/cases/<%= d.id %>" class="deadline-item <%= d.urgency %>" style="text-decoration: none;">
+        <div class="deadline-days-badge">
+          <%= d.daysLeft %>
+          <small>days</small>
+        </div>
+        <div class="deadline-info">
+          <div class="deadline-case-title"><%= d.title %></div>
+          <div class="deadline-meta">
+            <span class="badge badge-<%= d.type %>" style="font-size: 10px;"><%= d.type.replace('_', ' ') %></span>
+            &nbsp;·&nbsp;
+            <%= new Date(d.deadline).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' }) %>
+            <% if (d.attorney) { %>
+              &nbsp;·&nbsp; <%= d.attorney.full_name %>
+            <% } %>
+          </div>
+        </div>
+        <span class="badge badge-<%= d.urgency %>">
+          <% if (d.urgency === 'critical') { %>🔴 Critical
+          <% } else if (d.urgency === 'warning') { %>🟡 Warning
+          <% } else if (d.urgency === 'upcoming') { %>🔵 Upcoming
+          <% } else { %>🟢 On Track<% } %>
+        </span>
+      </a>
+    <% }); %>
+  </div>
+<% } else { %>
+  <div class="card">
+    <div class="empty-state">
+      <div class="empty-state-icon">✅</div>
+      <p class="empty-state-title">No upcoming deadlines</p>
+      <p class="empty-state-desc">All your cases have no pending deadlines. Add deadlines to cases to track them here.</p>
+      <a href="/cases" class="btn btn-primary btn-sm">View Cases</a>
+    </div>
+  </div>
+<% } %>

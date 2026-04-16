@@ -1,0 +1,97 @@
+<div class="auth-layout">
+  <div class="auth-brand">
+    <div class="auth-brand-content">
+      <div class="auth-brand-logo">⚖️</div>
+      <h1 class="auth-brand-title">LexVault</h1>
+      <p class="auth-brand-desc">Join the platform trusted by IP attorneys and law firms for streamlined case management.</p>
+      <div class="auth-brand-features">
+        <div class="auth-brand-feature">
+          <div class="auth-brand-feature-icon">🚀</div>
+          <span>Get started in under 2 minutes</span>
+        </div>
+        <div class="auth-brand-feature">
+          <div class="auth-brand-feature-icon">🔒</div>
+          <span>Enterprise-grade security with Supabase</span>
+        </div>
+        <div class="auth-brand-feature">
+          <div class="auth-brand-feature-icon">📊</div>
+          <span>Real-time dashboards & analytics</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="auth-form-side">
+    <div class="auth-form-container">
+      <h2 class="auth-form-title">Create your account</h2>
+      <p class="auth-form-subtitle">Start managing IP cases with LexVault</p>
+
+      <% if (typeof error !== 'undefined' && error && error.length > 0) { %>
+        <% error.forEach(function(msg) { %>
+          <div class="alert alert-error">
+            <span>❌</span>
+            <span><%= msg %></span>
+          </div>
+        <% }); %>
+      <% } %>
+
+      <div class="auth-form">
+        <form action="/auth/register" method="POST">
+          <div class="form-group">
+            <label class="form-label" for="full_name">Full name</label>
+            <input type="text" id="full_name" name="full_name" class="form-input" placeholder="John Doe" required autofocus>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="email">Email address</label>
+            <input type="email" id="email" name="email" class="form-input" placeholder="you@example.com" required>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="password">Password</label>
+              <input type="password" id="password" name="password" class="form-input" placeholder="Min 6 characters" required minlength="6">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="password_confirm">Confirm password</label>
+              <input type="password" id="password_confirm" name="password_confirm" class="form-input" placeholder="Re-enter password" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">I am a...</label>
+            <div class="role-selector">
+              <div class="role-option">
+                <input type="radio" id="role_attorney" name="role" value="attorney" required checked>
+                <label for="role_attorney">
+                  <span class="role-option-icon">⚖️</span>
+                  <span class="role-option-name">Attorney</span>
+                  <span class="role-option-desc">Manage IP cases</span>
+                </label>
+              </div>
+              <div class="role-option">
+                <input type="radio" id="role_client" name="role" value="client">
+                <label for="role_client">
+                  <span class="role-option-icon">👤</span>
+                  <span class="role-option-name">Client</span>
+                  <span class="role-option-desc">View my cases</span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="firm_name">Firm name <span class="form-label-optional">(optional)</span></label>
+            <input type="text" id="firm_name" name="firm_name" class="form-input" placeholder="Your law firm name">
+          </div>
+
+          <button type="submit" class="btn btn-primary">Create account</button>
+        </form>
+      </div>
+
+      <div class="auth-form-footer">
+        Already have an account? <a href="/auth/login">Sign in</a>
+      </div>
+    </div>
+  </div>
+</div>

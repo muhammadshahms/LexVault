@@ -1,0 +1,81 @@
+<div class="page-header">
+  <div class="page-header-left">
+    <h1>My Dashboard</h1>
+    <p>Welcome, <%= currentUser.fullName %>! Here's your case overview.</p>
+  </div>
+</div>
+
+<!-- Stats -->
+<div class="stats-grid">
+  <div class="stat-card purple">
+    <div class="stat-icon purple">📁</div>
+    <div class="stat-info">
+      <div class="stat-value"><%= stats.totalCases %></div>
+      <div class="stat-label">My Cases</div>
+    </div>
+  </div>
+  <div class="stat-card teal">
+    <div class="stat-icon teal">🔓</div>
+    <div class="stat-info">
+      <div class="stat-value"><%= stats.openCases %></div>
+      <div class="stat-label">Active Cases</div>
+    </div>
+  </div>
+  <div class="stat-card amber">
+    <div class="stat-icon amber">⏰</div>
+    <div class="stat-info">
+      <div class="stat-value"><%= stats.upcomingDeadlines %></div>
+      <div class="stat-label">Upcoming Deadlines</div>
+    </div>
+  </div>
+</div>
+
+<!-- My Cases -->
+<div class="card">
+  <div class="card-header">
+    <h3 class="card-title">My Cases</h3>
+  </div>
+  <% if (cases.length > 0) { %>
+    <div class="table-wrapper" style="border: none;">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Case</th>
+            <th>Type</th>
+            <th>Status</th>
+            <th>Attorney</th>
+            <th>Deadline</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% cases.forEach(function(c) { %>
+            <tr>
+              <td>
+                <a href="/cases/<%= c.id %>" class="table-title" style="color: var(--brand-primary);"><%= c.title %></a>
+              </td>
+              <td><span class="badge badge-<%= c.type %>"><%= c.type %></span></td>
+              <td><span class="badge badge-<%= c.status %>"><%= c.status.replace('_', ' ') %></span></td>
+              <td class="text-sm"><%= c.attorney ? c.attorney.full_name : '—' %></td>
+              <td>
+                <% if (c.deadline) { %>
+                  <div class="deadline-indicator <%= c.daysLeft <= 7 ? 'critical' : c.daysLeft <= 14 ? 'warning' : c.daysLeft <= 30 ? 'upcoming' : 'normal' %>">
+                    <span class="deadline-dot"></span>
+                    <%= c.daysLeft %> days
+                  </div>
+                <% } else { %>
+                  <span class="text-sm text-muted">—</span>
+                <% } %>
+              </td>
+            </tr>
+          <% }); %>
+        </tbody>
+      </table>
+    </div>
+  <% } else { %>
+    <div class="empty-state">
+      <div class="empty-state-icon">📁</div>
+      <p class="empty-state-title">No cases assigned</p>
+      <p class="empty-state-desc">You'll see your cases here once your attorney assigns them.</p>
+    </div>
+  <% } %>
+</div>

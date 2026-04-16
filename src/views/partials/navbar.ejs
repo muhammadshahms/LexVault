@@ -1,0 +1,11 @@
+<header class="navbar">
+  <div class="navbar-left">
+    <button id="mobile-menu-btn" class="mobile-menu-btn" aria-label="Toggle menu">☰</button>
+    <h2 class="navbar-title"><%= typeof title !== 'undefined' ? title : 'Dashboard' %></h2>
+  </div>
+  <div class="navbar-right">
+    <% if (currentUser) { %>
+      <span class="badge badge-<%= currentUser.role %>" style="font-size: 12px;"><%= currentUser.role %></span>
+    <% } %>
+  </div>
+</header>

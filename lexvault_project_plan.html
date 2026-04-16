@@ -1,0 +1,303 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font-sans);font-size:14px;color:var(--color-text-primary)}
+.page{padding:1.5rem 0}
+.section{margin-bottom:2rem}
+.section-title{font-size:11px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--color-text-secondary);margin-bottom:.75rem;padding-bottom:.5rem;border-bottom:0.5px solid var(--color-border-tertiary)}
+.tabs{display:flex;gap:4px;margin-bottom:1.5rem;border-bottom:0.5px solid var(--color-border-tertiary);padding-bottom:0}
+.tab{padding:8px 16px;font-size:13px;cursor:pointer;color:var(--color-text-secondary);border-bottom:2px solid transparent;margin-bottom:-1px;background:transparent;border-top:none;border-left:none;border-right:none}
+.tab.active{color:#534AB7;border-bottom-color:#534AB7;font-weight:500}
+.panel{display:none}.panel.active{display:block}
+.tree{font-family:var(--font-mono);font-size:12.5px;line-height:1.9;color:var(--color-text-primary);background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:1.25rem 1.5rem}
+.tree .dir{color:#534AB7;font-weight:500}
+.tree .file{color:var(--color-text-primary)}
+.tree .comment{color:var(--color-text-secondary);font-size:11.5px}
+.tree .indent1{padding-left:1.25rem}
+.tree .indent2{padding-left:2.5rem}
+.tree .indent3{padding-left:3.75rem}
+.tree .indent4{padding-left:5rem}
+.module-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.module-card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:1rem}
+.module-card .mc-label{font-size:10px;font-weight:500;letter-spacing:.07em;text-transform:uppercase;margin-bottom:6px}
+.module-card .mc-title{font-size:13px;font-weight:500;margin-bottom:6px;color:var(--color-text-primary)}
+.module-card .mc-items{font-size:12px;color:var(--color-text-secondary);line-height:1.8}
+.purple-label{color:#3C3489;background:#EEEDFE;padding:2px 7px;border-radius:4px}
+.teal-label{color:#085041;background:#E1F5EE;padding:2px 7px;border-radius:4px}
+.coral-label{color:#712B13;background:#FAECE7;padding:2px 7px;border-radius:4px}
+.gray-label{color:#444441;background:#F1EFE8;padding:2px 7px;border-radius:4px}
+.amber-label{color:#633806;background:#FAEEDA;padding:2px 7px;border-radius:4px}
+.flow-steps{display:flex;flex-direction:column;gap:0}
+.flow-step{display:flex;gap:12px;align-items:flex-start}
+.step-line{display:flex;flex-direction:column;align-items:center;flex-shrink:0}
+.step-dot{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:500;flex-shrink:0}
+.step-connector{width:1px;flex:1;min-height:20px;background:var(--color-border-tertiary);margin:2px 0}
+.step-body{padding-bottom:20px;flex:1}
+.step-title{font-size:13px;font-weight:500;color:var(--color-text-primary);margin-bottom:3px}
+.step-desc{font-size:12px;color:var(--color-text-secondary);line-height:1.6}
+.code-chip{display:inline-block;font-family:var(--font-mono);font-size:11px;background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:4px;padding:1px 6px;color:var(--color-text-secondary);margin:1px 2px}
+.role-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:1.25rem}
+.role-card{border-radius:var(--border-radius-lg);padding:1rem;border:0.5px solid}
+.role-card.admin{background:#EEEDFE;border-color:#AFA9EC}
+.role-card.attorney{background:#E1F5EE;border-color:#9FE1CB}
+.role-card.client{background:#FAEEDA;border-color:#FAC775}
+.role-card .rc-role{font-size:10px;font-weight:500;letter-spacing:.07em;text-transform:uppercase;margin-bottom:4px}
+.role-card.admin .rc-role{color:#3C3489}
+.role-card.attorney .rc-role{color:#085041}
+.role-card.client .rc-role{color:#633806}
+.role-card .rc-perms{font-size:12px;line-height:1.8;color:var(--color-text-secondary)}
+.stack-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.stack-badge{font-size:11px;padding:4px 10px;border-radius:20px;font-weight:500}
+.phase-list{display:flex;flex-direction:column;gap:8px}
+.phase-item{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;background:var(--color-background-secondary);border-radius:var(--border-radius-md);border-left:3px solid}
+.phase-item.p1{border-left-color:#534AB7}
+.phase-item.p2{border-left-color:#1D9E75}
+.phase-item.p3{border-left-color:#D85A30}
+.phase-item.p4{border-left-color:#BA7517}
+.phase-num{font-size:11px;font-weight:500;min-width:54px;margin-top:1px}
+.phase-item.p1 .phase-num{color:#3C3489}
+.phase-item.p2 .phase-num{color:#085041}
+.phase-item.p3 .phase-num{color:#712B13}
+.phase-item.p4 .phase-num{color:#633806}
+.phase-body .ph-title{font-size:13px;font-weight:500;margin-bottom:2px}
+.phase-body .ph-desc{font-size:12px;color:var(--color-text-secondary);line-height:1.6}
+</style>
+<div class="page">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem">
+    <div>
+      <div style="font-size:20px;font-weight:500;color:var(--color-text-primary)">LexVault</div>
+      <div style="font-size:12px;color:var(--color-text-secondary);margin-top:2px">IP Case Management Platform — Project Blueprint</div>
+    </div>
+    <div style="display:flex;gap:6px">
+      <span class="stack-badge" style="background:#EEEDFE;color:#3C3489">Node.js</span>
+      <span class="stack-badge" style="background:#E1F5EE;color:#085041">Supabase</span>
+      <span class="stack-badge" style="background:#FAEEDA;color:#633806">EJS</span>
+      <span class="stack-badge" style="background:#E6F1FB;color:#0C447C">Stripe</span>
+    </div>
+  </div>
+  <div class="tabs">
+    <button class="tab active" onclick="showTab('structure')">File structure</button>
+    <button class="tab" onclick="showTab('auth')">Auth & roles</button>
+    <button class="tab" onclick="showTab('modules')">Modules</button>
+    <button class="tab" onclick="showTab('phases')">Build phases</button>
+  </div>
+
+  <div id="structure" class="panel active">
+    <div class="section">
+      <div class="section-title">Project directory — LexVault</div>
+      <div class="tree">
+        <div><span class="dir">lexvault/</span></div>
+        <div class="indent1"><span class="dir">src/</span></div>
+        <div class="indent2"><span class="dir">config/</span></div>
+        <div class="indent3"><span class="file">supabase.js</span> <span class="comment">— Supabase client init</span></div>
+        <div class="indent3"><span class="file">stripe.js</span> <span class="comment">— Stripe client init</span></div>
+        <div class="indent3"><span class="file">env.js</span> <span class="comment">— env vars validation</span></div>
+        <div class="indent2"><span class="dir">middleware/</span></div>
+        <div class="indent3"><span class="file">auth.js</span> <span class="comment">— session check, role guard</span></div>
+        <div class="indent3"><span class="file">roleGuard.js</span> <span class="comment">— admin / attorney / client</span></div>
+        <div class="indent3"><span class="file">errorHandler.js</span> <span class="comment">— global error handler</span></div>
+        <div class="indent2"><span class="dir">routes/</span></div>
+        <div class="indent3"><span class="file">auth.routes.js</span> <span class="comment">— login, register, logout</span></div>
+        <div class="indent3"><span class="file">cases.routes.js</span> <span class="comment">— IP case CRUD</span></div>
+        <div class="indent3"><span class="file">clients.routes.js</span> <span class="comment">— client management</span></div>
+        <div class="indent3"><span class="file">deadlines.routes.js</span> <span class="comment">— deadline alerts</span></div>
+        <div class="indent3"><span class="file">billing.routes.js</span> <span class="comment">— Stripe subscriptions</span></div>
+        <div class="indent3"><span class="file">dashboard.routes.js</span> <span class="comment">— role-based dashboard</span></div>
+        <div class="indent2"><span class="dir">controllers/</span></div>
+        <div class="indent3"><span class="file">auth.controller.js</span></div>
+        <div class="indent3"><span class="file">cases.controller.js</span></div>
+        <div class="indent3"><span class="file">clients.controller.js</span></div>
+        <div class="indent3"><span class="file">deadlines.controller.js</span></div>
+        <div class="indent3"><span class="file">billing.controller.js</span></div>
+        <div class="indent2"><span class="dir">services/</span></div>
+        <div class="indent3"><span class="file">deadline.service.js</span> <span class="comment">— cron job, 14-day alerts</span></div>
+        <div class="indent3"><span class="file">email.service.js</span> <span class="comment">— Supabase email / nodemailer</span></div>
+        <div class="indent3"><span class="file">stripe.service.js</span> <span class="comment">— plan create, webhook</span></div>
+        <div class="indent2"><span class="dir">views/</span> <span class="comment">— EJS templates</span></div>
+        <div class="indent3"><span class="dir">layouts/</span></div>
+        <div class="indent4"><span class="file">main.ejs</span> <span class="comment">— base layout</span></div>
+        <div class="indent4"><span class="file">auth.ejs</span> <span class="comment">— login/register layout</span></div>
+        <div class="indent3"><span class="dir">partials/</span></div>
+        <div class="indent4"><span class="file">sidebar.ejs</span></div>
+        <div class="indent4"><span class="file">navbar.ejs</span></div>
+        <div class="indent4"><span class="file">alerts.ejs</span></div>
+        <div class="indent3"><span class="dir">auth/</span></div>
+        <div class="indent4"><span class="file">login.ejs</span></div>
+        <div class="indent4"><span class="file">register.ejs</span></div>
+        <div class="indent3"><span class="dir">dashboard/</span></div>
+        <div class="indent4"><span class="file">admin.ejs</span></div>
+        <div class="indent4"><span class="file">attorney.ejs</span></div>
+        <div class="indent4"><span class="file">client.ejs</span></div>
+        <div class="indent3"><span class="dir">cases/</span></div>
+        <div class="indent4"><span class="file">index.ejs</span></div>
+        <div class="indent4"><span class="file">create.ejs</span></div>
+        <div class="indent4"><span class="file">detail.ejs</span></div>
+        <div class="indent3"><span class="dir">billing/</span></div>
+        <div class="indent4"><span class="file">plans.ejs</span></div>
+        <div class="indent4"><span class="file">success.ejs</span></div>
+        <div class="indent2"><span class="dir">public/</span></div>
+        <div class="indent3"><span class="file">css/style.css</span></div>
+        <div class="indent3"><span class="file">js/main.js</span></div>
+        <div class="indent2"><span class="file">app.js</span> <span class="comment">— Express setup, middleware</span></div>
+        <div class="indent2"><span class="file">server.js</span> <span class="comment">— entry point, port listen</span></div>
+        <div class="indent1"><span class="file">.env</span> <span class="comment">— SUPABASE_URL, SUPABASE_KEY, STRIPE_KEY…</span></div>
+        <div class="indent1"><span class="file">.env.example</span></div>
+        <div class="indent1"><span class="file">package.json</span></div>
+        <div class="indent1"><span class="file">README.md</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="auth" class="panel">
+    <div class="section">
+      <div class="section-title">Role-based access control</div>
+      <div class="role-grid">
+        <div class="role-card admin">
+          <div class="rc-role">Admin</div>
+          <div class="rc-perms">All cases & users<br>Manage attorneys<br>Billing & subscriptions<br>System settings<br>View all reports</div>
+        </div>
+        <div class="role-card attorney">
+          <div class="rc-role">Attorney</div>
+          <div class="rc-perms">Own cases only<br>Assign to clients<br>Set deadlines<br>Upload documents<br>View billing status</div>
+        </div>
+        <div class="role-card client">
+          <div class="rc-role">Client</div>
+          <div class="rc-perms">View own cases<br>See deadlines<br>Download docs<br>Invoice history<br>No edit access</div>
+        </div>
+      </div>
+    </div>
+    <div class="section">
+      <div class="section-title">Auth flow — Supabase + session</div>
+      <div class="flow-steps">
+        <div class="flow-step">
+          <div class="step-line"><div class="step-dot" style="background:#EEEDFE;color:#3C3489">1</div><div class="step-connector"></div></div>
+          <div class="step-body"><div class="step-title">Register / Login</div><div class="step-desc">User submits form → <span class="code-chip">supabase.auth.signUp()</span> or <span class="code-chip">signInWithPassword()</span> → Supabase returns JWT token</div></div>
+        </div>
+        <div class="flow-step">
+          <div class="step-line"><div class="step-dot" style="background:#EEEDFE;color:#3C3489">2</div><div class="step-connector"></div></div>
+          <div class="step-body"><div class="step-title">Session store</div><div class="step-desc">JWT stored in <span class="code-chip">express-session</span> → user ID + role saved server-side → cookie set on client</div></div>
+        </div>
+        <div class="flow-step">
+          <div class="step-line"><div class="step-dot" style="background:#EEEDFE;color:#3C3489">3</div><div class="step-connector"></div></div>
+          <div class="step-body"><div class="step-title">Role fetch</div><div class="step-desc">On login → query Supabase <span class="code-chip">profiles</span> table → fetch <span class="code-chip">role</span> field → attach to <span class="code-chip">req.session.user</span></div></div>
+        </div>
+        <div class="flow-step">
+          <div class="step-line"><div class="step-dot" style="background:#EEEDFE;color:#3C3489">4</div><div class="step-connector"></div></div>
+          <div class="step-body"><div class="step-title">Route guard middleware</div><div class="step-desc"><span class="code-chip">auth.js</span> checks session exists → <span class="code-chip">roleGuard.js</span> checks <span class="code-chip">req.session.user.role</span> → redirect if unauthorized</div></div>
+        </div>
+        <div class="flow-step">
+          <div class="step-line"><div class="step-dot" style="background:#E1F5EE;color:#085041">5</div></div>
+          <div class="step-body"><div class="step-title">Dashboard redirect</div><div class="step-desc">Admin → <span class="code-chip">/dashboard/admin</span> &nbsp; Attorney → <span class="code-chip">/dashboard/attorney</span> &nbsp; Client → <span class="code-chip">/dashboard/client</span></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="section">
+      <div class="section-title">Supabase tables needed</div>
+      <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px">
+        <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:10px 12px;font-size:12px"><div style="font-weight:500;margin-bottom:4px;font-family:var(--font-mono)">profiles</div><div style="color:var(--color-text-secondary);line-height:1.7">id (FK auth.users)<br>role<br>full_name<br>firm_name<br>created_at</div></div>
+        <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:10px 12px;font-size:12px"><div style="font-weight:500;margin-bottom:4px;font-family:var(--font-mono)">cases</div><div style="color:var(--color-text-secondary);line-height:1.7">id, title, type<br>status, attorney_id<br>client_id<br>filing_date<br>deadline</div></div>
+        <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:10px 12px;font-size:12px"><div style="font-weight:500;margin-bottom:4px;font-family:var(--font-mono)">subscriptions</div><div style="color:var(--color-text-secondary);line-height:1.7">id, user_id<br>stripe_id<br>plan, status<br>current_period_end</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="modules" class="panel">
+    <div class="section">
+      <div class="section-title">Feature modules</div>
+      <div class="module-grid">
+        <div class="module-card">
+          <div class="mc-label purple-label">Core</div>
+          <div class="mc-title">Case management</div>
+          <div class="mc-items">Create / edit / delete cases<br>Type: Trademark / Patent<br>Status tracking<br>Attorney assignment<br>RLS by role</div>
+        </div>
+        <div class="module-card">
+          <div class="mc-label teal-label">Deadlines</div>
+          <div class="mc-title">Deadline engine</div>
+          <div class="mc-items">Auto-calculate days left<br>Cron job (node-cron)<br>Email alert at 30/14/7 days<br>Urgent badge in UI<br>Filter by expiring soon</div>
+        </div>
+        <div class="module-card">
+          <div class="mc-label coral-label">Billing</div>
+          <div class="mc-title">Stripe subscriptions</div>
+          <div class="mc-items">Plans: Starter / Pro / Firm<br>Checkout session<br>Webhook handler<br>Subscription status check<br>Invoice history page</div>
+        </div>
+        <div class="module-card">
+          <div class="mc-label amber-label">Clients</div>
+          <div class="mc-title">Client portal</div>
+          <div class="mc-items">Attorney adds client<br>Client sees own cases<br>Download documents<br>Read-only access<br>Status updates</div>
+        </div>
+        <div class="module-card">
+          <div class="mc-label gray-label">Admin</div>
+          <div class="mc-title">Admin panel</div>
+          <div class="mc-items">All users list<br>Assign / revoke roles<br>Platform-wide stats<br>Case overview<br>Billing overview</div>
+        </div>
+        <div class="module-card">
+          <div class="mc-label purple-label">Auth</div>
+          <div class="mc-title">Auth system</div>
+          <div class="mc-items">Supabase Auth<br>Email + password<br>Role-based sessions<br>Protected routes<br>Auto-redirect by role</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="phases" class="panel">
+    <div class="section">
+      <div class="section-title">Build order — 4 phases</div>
+      <div class="phase-list">
+        <div class="phase-item p1">
+          <div class="phase-num">Phase 1<br><span style="font-weight:400;font-size:11px">Day 1</span></div>
+          <div class="phase-body">
+            <div class="ph-title">Project setup + Auth</div>
+            <div class="ph-desc">Init Node.js + Express + EJS. Connect Supabase. Build login/register. Role-based session. Dashboard redirect by role. Middleware setup.</div>
+          </div>
+        </div>
+        <div class="phase-item p2">
+          <div class="phase-num">Phase 2<br><span style="font-weight:400;font-size:11px">Day 2</span></div>
+          <div class="phase-body">
+            <div class="ph-title">Cases module + Deadlines</div>
+            <div class="ph-desc">Case CRUD routes + controllers. Supabase RLS policies. EJS views for cases list/detail/create. Deadline calculation. Cron job for email alerts.</div>
+          </div>
+        </div>
+        <div class="phase-item p3">
+          <div class="phase-num">Phase 3<br><span style="font-weight:400;font-size:11px">Day 3</span></div>
+          <div class="phase-body">
+            <div class="ph-title">Client portal + Admin</div>
+            <div class="ph-desc">Attorney assigns client to case. Client dashboard (read-only). Admin panel — all users, all cases, role management. RLS finalization.</div>
+          </div>
+        </div>
+        <div class="phase-item p4">
+          <div class="phase-num">Phase 4<br><span style="font-weight:400;font-size:11px">Day 4</span></div>
+          <div class="phase-body">
+            <div class="ph-title">Stripe billing + Polish</div>
+            <div class="ph-desc">Stripe checkout session. Webhook handler. Subscription gating. UI polish — sidebar, alerts, responsive. Deploy to IDX / Railway / Render. README + GitHub.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="section">
+      <div class="section-title">Key packages</div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap">
+        <span class="stack-badge" style="background:#EEEDFE;color:#3C3489">express</span>
+        <span class="stack-badge" style="background:#EEEDFE;color:#3C3489">ejs</span>
+        <span class="stack-badge" style="background:#EEEDFE;color:#3C3489">express-session</span>
+        <span class="stack-badge" style="background:#E1F5EE;color:#085041">@supabase/supabase-js</span>
+        <span class="stack-badge" style="background:#E6F1FB;color:#0C447C">stripe</span>
+        <span class="stack-badge" style="background:#FAEEDA;color:#633806">node-cron</span>
+        <span class="stack-badge" style="background:#FAEEDA;color:#633806">nodemailer</span>
+        <span class="stack-badge" style="background:#F1EFE8;color:#444441">dotenv</span>
+        <span class="stack-badge" style="background:#F1EFE8;color:#444441">morgan</span>
+        <span class="stack-badge" style="background:#FCEBEB;color:#791F1F">helmet</span>
+      </div>
+    </div>
+    <div style="margin-top:1rem">
+      <button onclick="sendPrompt('LexVault ka Phase 1 shuru karo — Node.js + Express setup aur Supabase auth with role-based sessions ka complete code likho')" style="background:#534AB7;color:#fff;border:none;border-radius:var(--border-radius-md);padding:9px 18px;font-size:13px;cursor:pointer;font-weight:500">Phase 1 shuru karo — code likhwao ↗</button>
+    </div>
+  </div>
+</div>
+<script>
+function showTab(id){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.target.classList.add('active');
+}
+</script>

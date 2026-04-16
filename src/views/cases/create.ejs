@@ -1,0 +1,71 @@
+<div class="page-header">
+  <div class="page-header-left">
+    <h1>New Case</h1>
+    <p>Create a new intellectual property case</p>
+  </div>
+  <a href="/cases" class="btn btn-secondary">← Back to Cases</a>
+</div>
+
+<div class="card" style="max-width: 720px;">
+  <form action="/cases" method="POST">
+    <div class="form-group">
+      <label class="form-label" for="title">Case Title *</label>
+      <input type="text" id="title" name="title" class="form-input" placeholder="e.g., Apple Inc. Trademark Registration" required>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label" for="type">Case Type *</label>
+        <select id="type" name="type" class="form-select" required>
+          <option value="">Select type...</option>
+          <option value="trademark">Trademark</option>
+          <option value="patent">Patent</option>
+          <option value="copyright">Copyright</option>
+          <option value="trade_secret">Trade Secret</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="client_id">Assign Client <span class="form-label-optional">(optional)</span></label>
+        <select id="client_id" name="client_id" class="form-select">
+          <option value="">No client</option>
+          <% clients.forEach(function(c) { %>
+            <option value="<%= c.id %>"><%= c.full_name %></option>
+          <% }); %>
+        </select>
+      </div>
+    </div>
+
+    <% if (currentUser.role === 'admin') { %>
+      <div class="form-group">
+        <label class="form-label" for="attorney_id">Assign Attorney</label>
+        <select id="attorney_id" name="attorney_id" class="form-select">
+          <option value="">Select attorney...</option>
+          <% attorneys.forEach(function(a) { %>
+            <option value="<%= a.id %>"><%= a.full_name %></option>
+          <% }); %>
+        </select>
+      </div>
+    <% } %>
+
+    <div class="form-group">
+      <label class="form-label" for="description">Description <span class="form-label-optional">(optional)</span></label>
+      <textarea id="description" name="description" class="form-textarea" placeholder="Case details, notes, and background information..."></textarea>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label" for="filing_date">Filing Date <span class="form-label-optional">(optional)</span></label>
+        <input type="date" id="filing_date" name="filing_date" class="form-input">
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="deadline">Deadline <span class="form-label-optional">(optional)</span></label>
+        <input type="date" id="deadline" name="deadline" class="form-input">
+      </div>
+    </div>
+
+    <div style="display: flex; gap: 12px; margin-top: 8px;">
+      <button type="submit" class="btn btn-primary">Create Case</button>
+      <a href="/cases" class="btn btn-secondary">Cancel</a>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,115 @@
+<div class="page-header">
+  <div class="page-header-left">
+    <h1>Admin Dashboard</h1>
+    <p>Platform overview and management</p>
+  </div>
+  <a href="/cases/create" class="btn btn-primary">+ New Case</a>
+</div>
+
+<!-- Stats -->
+<div class="stats-grid">
+  <div class="stat-card purple">
+    <div class="stat-icon purple">👥</div>
+    <div class="stat-info">
+      <div class="stat-value"><%= stats.totalUsers %></div>
+      <div class="stat-label">Total Users</div>
+    </div>
+  </div>
+  <div class="stat-card teal">
+    <div class="stat-icon teal">📁</div>
+    <div class="stat-info">
+      <div class="stat-value"><%= stats.totalCases %></div>
+      <div class="stat-label">Total Cases</div>
+    </div>
+  </div>
+  <div class="stat-card blue">
+    <div class="stat-icon blue">💳</div>
+    <div class="stat-info">
+      <div class="stat-value"><%= stats.activeSubs %></div>
+      <div class="stat-label">Active Subscriptions</div>
+    </div>
+  </div>
+  <div class="stat-card amber">
+    <div class="stat-icon amber">⏰</div>
+    <div class="stat-info">
+      <div class="stat-value"><%= stats.upcomingDeadlines %></div>
+      <div class="stat-label">Upcoming Deadlines</div>
+    </div>
+  </div>
+</div>
+
+<!-- Two-column layout -->
+<div style="display: grid; grid-template-columns: 2fr 1fr; gap: 20px;">
+  <!-- Recent Cases -->
+  <div class="card">
+    <div class="card-header">
+      <h3 class="card-title">Recent Cases</h3>
+      <a href="/cases" class="btn btn-ghost btn-sm">View all →</a>
+    </div>
+    <% if (recentCases.length > 0) { %>
+      <div class="table-wrapper" style="border: none;">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Case</th>
+              <th>Type</th>
+              <th>Status</th>
+              <th>Attorney</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% recentCases.forEach(function(c) { %>
+              <tr>
+                <td>
+                  <a href="/cases/<%= c.id %>" class="table-title" style="color: var(--brand-primary);"><%= c.title %></a>
+                </td>
+                <td><span class="badge badge-<%= c.type %>"><%= c.type %></span></td>
+                <td><span class="badge badge-<%= c.status %>"><%= c.status.replace('_', ' ') %></span></td>
+                <td class="text-sm text-muted"><%= c.attorney ? c.attorney.full_name : '—' %></td>
+              </tr>
+            <% }); %>
+          </tbody>
+        </table>
+      </div>
+    <% } else { %>
+      <div class="empty-state">
+        <div class="empty-state-icon">📁</div>
+        <p class="empty-state-title">No cases yet</p>
+        <p class="empty-state-desc">Create your first case to get started</p>
+        <a href="/cases/create" class="btn btn-primary btn-sm">+ Create Case</a>
+      </div>
+    <% } %>
+  </div>
+
+  <!-- Users Management -->
+  <div class="card">
+    <div class="card-header">
+      <h3 class="card-title">Users</h3>
+      <span class="badge badge-admin"><%= users.length %> total</span>
+    </div>
+    <% if (users.length > 0) { %>
+      <div style="display: flex; flex-direction: column; gap: 10px; max-height: 400px; overflow-y: auto;">
+        <% users.forEach(function(u) { %>
+          <div style="display: flex; align-items: center; gap: 12px; padding: 10px; background: var(--gray-50); border-radius: var(--border-radius-md);">
+            <div class="sidebar-user-avatar" style="width: 32px; height: 32px; font-size: 11px;">
+              <%= u.full_name ? u.full_name.charAt(0).toUpperCase() : '?' %>
+            </div>
+            <div style="flex: 1; min-width: 0;">
+              <div style="font-size: 13px; font-weight: 500; color: var(--gray-900);" class="truncate"><%= u.full_name %></div>
+              <div style="font-size: 11px; color: var(--gray-400);"><%= u.firm_name || '' %></div>
+            </div>
+            <form action="/dashboard/admin/users/<%= u.id %>/role" method="POST" style="margin: 0;">
+              <select name="role" class="form-select" style="padding: 4px 28px 4px 8px; font-size: 11px; min-width: auto;" onchange="this.form.submit()">
+                <option value="admin" <%= u.role === 'admin' ? 'selected' : '' %>>Admin</option>
+                <option value="attorney" <%= u.role === 'attorney' ? 'selected' : '' %>>Attorney</option>
+                <option value="client" <%= u.role === 'client' ? 'selected' : '' %>>Client</option>
+              </select>
+            </form>
+          </div>
+        <% }); %>
+      </div>
+    <% } else { %>
+      <p class="text-sm text-muted">No users found</p>
+    <% } %>
+  </div>
+</div>

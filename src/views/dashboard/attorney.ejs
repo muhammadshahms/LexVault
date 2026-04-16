@@ -1,0 +1,95 @@
+<div class="page-header">
+  <div class="page-header-left">
+    <h1>Attorney Dashboard</h1>
+    <p>Welcome back, <%= currentUser.fullName %>!</p>
+  </div>
+  <a href="/cases/create" class="btn btn-primary">+ New Case</a>
+</div>
+
+<!-- Stats -->
+<div class="stats-grid">
+  <div class="stat-card purple">
+    <div class="stat-icon purple">📁</div>
+    <div class="stat-info">
+      <div class="stat-value"><%= stats.myCases %></div>
+      <div class="stat-label">My Cases</div>
+    </div>
+  </div>
+  <div class="stat-card teal">
+    <div class="stat-icon teal">🔓</div>
+    <div class="stat-info">
+      <div class="stat-value"><%= stats.openCases %></div>
+      <div class="stat-label">Open Cases</div>
+    </div>
+  </div>
+  <div class="stat-card amber">
+    <div class="stat-icon amber">👥</div>
+    <div class="stat-info">
+      <div class="stat-value"><%= stats.activeClients %></div>
+      <div class="stat-label">Active Clients</div>
+    </div>
+  </div>
+</div>
+
+<!-- Two-column layout -->
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+  <!-- Recent Cases -->
+  <div class="card">
+    <div class="card-header">
+      <h3 class="card-title">Recent Cases</h3>
+      <a href="/cases" class="btn btn-ghost btn-sm">View all →</a>
+    </div>
+    <% if (recentCases.length > 0) { %>
+      <div style="display: flex; flex-direction: column; gap: 10px;">
+        <% recentCases.forEach(function(c) { %>
+          <a href="/cases/<%= c.id %>" style="display: flex; align-items: center; justify-content: space-between; padding: 12px 14px; background: var(--gray-50); border-radius: var(--border-radius-md); text-decoration: none; transition: all 0.15s;">
+            <div>
+              <div style="font-size: 13px; font-weight: 500; color: var(--gray-900);"><%= c.title %></div>
+              <div style="font-size: 11px; color: var(--gray-400); margin-top: 2px;"><%= c.client ? c.client.full_name : 'No client' %></div>
+            </div>
+            <div style="display: flex; gap: 6px;">
+              <span class="badge badge-<%= c.type %>"><%= c.type %></span>
+              <span class="badge badge-<%= c.status %>"><%= c.status.replace('_', ' ') %></span>
+            </div>
+          </a>
+        <% }); %>
+      </div>
+    <% } else { %>
+      <div class="empty-state" style="padding: 30px;">
+        <div class="empty-state-icon">📁</div>
+        <p class="empty-state-title">No cases yet</p>
+        <a href="/cases/create" class="btn btn-primary btn-sm">+ Create Case</a>
+      </div>
+    <% } %>
+  </div>
+
+  <!-- Upcoming Deadlines -->
+  <div class="card">
+    <div class="card-header">
+      <h3 class="card-title">Upcoming Deadlines</h3>
+      <a href="/deadlines" class="btn btn-ghost btn-sm">View all →</a>
+    </div>
+    <% if (deadlines.length > 0) { %>
+      <div style="display: flex; flex-direction: column; gap: 10px;">
+        <% deadlines.forEach(function(d) { %>
+          <div style="display: flex; align-items: center; gap: 12px; padding: 12px 14px; border-radius: var(--border-radius-md); border-left: 3px solid <%= d.daysLeft <= 7 ? 'var(--danger)' : 'var(--warning)' %>; background: <%= d.daysLeft <= 7 ? 'var(--danger-bg)' : 'var(--warning-bg)' %>;">
+            <div style="font-weight: 700; font-size: 20px; min-width: 40px; color: <%= d.daysLeft <= 7 ? 'var(--danger)' : 'var(--warning)' %>;">
+              <%= d.daysLeft %>
+              <div style="font-size: 9px; font-weight: 500; text-transform: uppercase; opacity: 0.7;">days</div>
+            </div>
+            <div style="flex: 1;">
+              <a href="/cases/<%= d.id %>" style="font-size: 13px; font-weight: 500; color: var(--gray-900); text-decoration: none;"><%= d.title %></a>
+              <div style="font-size: 11px; color: var(--gray-400);"><%= new Date(d.deadline).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) %></div>
+            </div>
+          </div>
+        <% }); %>
+      </div>
+    <% } else { %>
+      <div class="empty-state" style="padding: 30px;">
+        <div class="empty-state-icon">✅</div>
+        <p class="empty-state-title">No urgent deadlines</p>
+        <p class="empty-state-desc text-sm text-muted">All deadlines are more than 14 days away</p>
+      </div>
+    <% } %>
+  </div>
+</div>

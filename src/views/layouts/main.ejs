@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="LexVault — IP Case Management Platform for law firms">
+  <title><%= typeof title !== 'undefined' ? title + ' | LexVault' : 'LexVault' %></title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div class="app-layout">
+    <%- include('../partials/sidebar') %>
+    <div id="sidebar-overlay" class="sidebar-overlay"></div>
+
+    <div class="main-wrapper">
+      <%- include('../partials/navbar') %>
+
+      <div class="main-content">
+        <%- include('../partials/alerts') %>
+        <%- body %>
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/main.js"></script>
+</body>
+</html>

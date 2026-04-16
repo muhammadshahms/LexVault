@@ -1,0 +1,77 @@
+<div class="page-header">
+  <div class="page-header-left">
+    <h1>Subscription Plans</h1>
+    <p>Choose the plan that fits your practice</p>
+  </div>
+</div>
+
+<div class="pricing-grid">
+  <!-- Starter Plan -->
+  <div class="pricing-card <%= currentPlan === 'starter' ? 'current' : '' %>">
+    <div class="pricing-plan-name">Starter</div>
+    <div class="pricing-plan-desc">For solo practitioners</div>
+    <div class="pricing-price">$29<span>/month</span></div>
+    <ul class="pricing-features">
+      <li>Up to 25 active cases</li>
+      <li>1 attorney seat</li>
+      <li>Basic deadline alerts</li>
+      <li>Client portal access</li>
+      <li>Email support</li>
+    </ul>
+    <% if (currentPlan === 'starter') { %>
+      <button class="btn btn-success" disabled>✓ Current Plan</button>
+    <% } else { %>
+      <form action="/billing/checkout" method="POST">
+        <input type="hidden" name="plan" value="starter">
+        <button type="submit" class="btn btn-secondary">Get Started</button>
+      </form>
+    <% } %>
+  </div>
+
+  <!-- Pro Plan -->
+  <div class="pricing-card featured <%= currentPlan === 'pro' ? 'current' : '' %>">
+    <div class="pricing-plan-name">Pro</div>
+    <div class="pricing-plan-desc">For growing practices</div>
+    <div class="pricing-price">$79<span>/month</span></div>
+    <ul class="pricing-features">
+      <li>Unlimited active cases</li>
+      <li>Up to 5 attorney seats</li>
+      <li>Priority deadline alerts</li>
+      <li>Advanced reporting</li>
+      <li>Priority email support</li>
+      <li>Document storage (5GB)</li>
+    </ul>
+    <% if (currentPlan === 'pro') { %>
+      <button class="btn btn-success" disabled>✓ Current Plan</button>
+    <% } else { %>
+      <form action="/billing/checkout" method="POST">
+        <input type="hidden" name="plan" value="pro">
+        <button type="submit" class="btn btn-primary">Get Pro</button>
+      </form>
+    <% } %>
+  </div>
+
+  <!-- Firm Plan -->
+  <div class="pricing-card <%= currentPlan === 'firm' ? 'current' : '' %>">
+    <div class="pricing-plan-name">Firm</div>
+    <div class="pricing-plan-desc">For full law firms</div>
+    <div class="pricing-price">$199<span>/month</span></div>
+    <ul class="pricing-features">
+      <li>Unlimited everything</li>
+      <li>Unlimited attorney seats</li>
+      <li>Custom deadline workflows</li>
+      <li>White-label client portal</li>
+      <li>Dedicated account manager</li>
+      <li>Document storage (50GB)</li>
+      <li>API access</li>
+    </ul>
+    <% if (currentPlan === 'firm') { %>
+      <button class="btn btn-success" disabled>✓ Current Plan</button>
+    <% } else { %>
+      <form action="/billing/checkout" method="POST">
+        <input type="hidden" name="plan" value="firm">
+        <button type="submit" class="btn btn-secondary">Get Firm</button>
+      </form>
+    <% } %>
+  </div>
+</div>

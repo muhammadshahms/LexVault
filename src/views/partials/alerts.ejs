@@ -1,0 +1,29 @@
+<% if (typeof success !== 'undefined' && success && success.length > 0) { %>
+  <% success.forEach(function(msg) { %>
+    <div class="alert alert-success">
+      <span>✅</span>
+      <span><%= msg %></span>
+      <button class="alert-close" aria-label="Close">&times;</button>
+    </div>
+  <% }); %>
+<% } %>
+
+<% if (typeof error !== 'undefined' && error && error.length > 0) { %>
+  <% error.forEach(function(msg) { %>
+    <div class="alert alert-error">
+      <span>❌</span>
+      <span><%= msg %></span>
+      <button class="alert-close" aria-label="Close">&times;</button>
+    </div>
+  <% }); %>
+<% } %>
+
+<% if (typeof info !== 'undefined' && info && info.length > 0) { %>
+  <% info.forEach(function(msg) { %>
+    <div class="alert alert-info">
+      <span>ℹ️</span>
+      <span><%= msg %></span>
+      <button class="alert-close" aria-label="Close">&times;</button>
+    </div>
+  <% }); %>
+<% } %>

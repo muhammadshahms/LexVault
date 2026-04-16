@@ -1,0 +1,11 @@
+<div class="error-page">
+  <div class="error-code"><%= statusCode %></div>
+  <h1 class="error-title">
+    <% if (statusCode === 404) { %>Page Not Found
+    <% } else if (statusCode === 403) { %>Access Denied
+    <% } else if (statusCode === 500) { %>Server Error
+    <% } else { %>Error<% } %>
+  </h1>
+  <p class="error-msg"><%= message %></p>
+  <a href="/" class="btn btn-primary">← Go Home</a>
+</div>

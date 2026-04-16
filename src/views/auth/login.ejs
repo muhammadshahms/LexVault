@@ -1,0 +1,72 @@
+<div class="auth-layout">
+  <div class="auth-brand">
+    <div class="auth-brand-content">
+      <div class="auth-brand-logo">⚖️</div>
+      <h1 class="auth-brand-title">LexVault</h1>
+      <p class="auth-brand-desc">The premier platform for managing intellectual property cases, deadlines, and client relationships.</p>
+      <div class="auth-brand-features">
+        <div class="auth-brand-feature">
+          <div class="auth-brand-feature-icon">📁</div>
+          <span>Manage trademark, patent & copyright cases</span>
+        </div>
+        <div class="auth-brand-feature">
+          <div class="auth-brand-feature-icon">⏰</div>
+          <span>Automated deadline alerts & tracking</span>
+        </div>
+        <div class="auth-brand-feature">
+          <div class="auth-brand-feature-icon">👥</div>
+          <span>Role-based access for attorneys & clients</span>
+        </div>
+        <div class="auth-brand-feature">
+          <div class="auth-brand-feature-icon">💳</div>
+          <span>Integrated billing & subscription plans</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="auth-form-side">
+    <div class="auth-form-container">
+      <h2 class="auth-form-title">Welcome back</h2>
+      <p class="auth-form-subtitle">Sign in to your LexVault account</p>
+
+      <% if (typeof error !== 'undefined' && error && error.length > 0) { %>
+        <% error.forEach(function(msg) { %>
+          <div class="alert alert-error">
+            <span>❌</span>
+            <span><%= msg %></span>
+          </div>
+        <% }); %>
+      <% } %>
+
+      <% if (typeof success !== 'undefined' && success && success.length > 0) { %>
+        <% success.forEach(function(msg) { %>
+          <div class="alert alert-success">
+            <span>✅</span>
+            <span><%= msg %></span>
+          </div>
+        <% }); %>
+      <% } %>
+
+      <div class="auth-form">
+        <form action="/auth/login" method="POST">
+          <div class="form-group">
+            <label class="form-label" for="email">Email address</label>
+            <input type="email" id="email" name="email" class="form-input" placeholder="you@example.com" required autofocus>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="password">Password</label>
+            <input type="password" id="password" name="password" class="form-input" placeholder="Enter your password" required>
+          </div>
+
+          <button type="submit" class="btn btn-primary">Sign in</button>
+        </form>
+      </div>
+
+      <div class="auth-form-footer">
+        Don't have an account? <a href="/auth/register">Create one</a>
+      </div>
+    </div>
+  </div>
+</div>

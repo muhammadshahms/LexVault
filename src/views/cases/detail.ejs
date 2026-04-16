@@ -1,0 +1,160 @@
+<div class="detail-header">
+  <div class="detail-header-left">
+    <h1><%= caseData.title %></h1>
+    <div class="detail-badges">
+      <span class="badge badge-<%= caseData.type %>"><%= caseData.type.replace('_', ' ') %></span>
+      <span class="badge badge-<%= caseData.status %>"><%= caseData.status.replace('_', ' ') %></span>
+    </div>
+  </div>
+  <% if (currentUser.role !== 'client') { %>
+    <div class="detail-header-actions">
+      <a href="/cases/<%= caseData.id %>/edit" class="btn btn-secondary">✏️ Edit</a>
+      <form action="/cases/<%= caseData.id %>?_method=DELETE" method="POST" style="margin: 0;">
+        <button type="submit" class="btn btn-danger" data-confirm="Are you sure you want to delete this case? This action cannot be undone.">🗑️ Delete</button>
+      </form>
+    </div>
+  <% } %>
+</div>
+
+<div class="detail-grid">
+  <!-- Main Content -->
+  <div>
+    <!-- Description -->
+    <div class="card mb-24">
+      <div class="detail-section">
+        <div class="detail-section-title">Description</div>
+        <p style="font-size: 14px; color: var(--gray-700); line-height: 1.7;">
+          <%= caseData.description || 'No description provided.' %>
+        </p>
+      </div>
+    </div>
+
+    <!-- Timeline Info -->
+    <div class="card">
+      <div class="detail-section">
+        <div class="detail-section-title">Timeline</div>
+        <div class="form-row">
+          <div class="detail-field">
+            <div class="detail-field-label">Filing Date</div>
+            <div class="detail-field-value">
+              <%= caseData.filing_date ? new Date(caseData.filing_date).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) : 'Not set' %>
+            </div>
+          </div>
+          <div class="detail-field">
+            <div class="detail-field-label">Deadline</div>
+            <div class="detail-field-value">
+              <%= caseData.deadline ? new Date(caseData.deadline).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) : 'Not set' %>
+            </div>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="detail-field">
+            <div class="detail-field-label">Created</div>
+            <div class="detail-field-value text-sm text-muted">
+              <%= new Date(caseData.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) %>
+            </div>
+          </div>
+          <div class="detail-field">
+            <div class="detail-field-label">Last Updated</div>
+            <div class="detail-field-value text-sm text-muted">
+              <%= new Date(caseData.updated_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sidebar -->
+  <div>
+    <!-- Deadline Countdown -->
+    <% if (caseData.deadline && caseData.daysLeft !== undefined) { %>
+      <% 
+        let urgency = 'normal';
+        if (caseData.daysLeft <= 7) urgency = 'critical';
+        else if (caseData.daysLeft <= 14) urgency = 'warning';
+        else if (caseData.daysLeft <= 30) urgency = 'upcoming';
+      %>
+      <div class="deadline-countdown <%= urgency %> mb-16">
+        <div>
+          <div class="deadline-countdown-number"><%= caseData.daysLeft %></div>
+          <div class="deadline-countdown-label">days remaining</div>
+        </div>
+      </div>
+    <% } %>
+
+    <!-- Case Info -->
+    <div class="card mb-16">
+      <div class="detail-section">
+        <div class="detail-section-title">Case Information</div>
+
+        <div class="detail-field">
+          <div class="detail-field-label">Type</div>
+          <div class="detail-field-value">
+            <span class="badge badge-<%= caseData.type %>"><%= caseData.type.replace('_', ' ') %></span>
+          </div>
+        </div>
+
+        <div class="detail-field">
+          <div class="detail-field-label">Status</div>
+          <div class="detail-field-value">
+            <span class="badge badge-<%= caseData.status %>"><%= caseData.status.replace('_', ' ') %></span>
+          </div>
+        </div>
+
+        <div class="detail-field">
+          <div class="detail-field-label">Case ID</div>
+          <div class="detail-field-value font-mono text-sm"><%= caseData.id %></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Assigned People -->
+    <div class="card">
+      <div class="detail-section">
+        <div class="detail-section-title">People</div>
+
+        <div class="detail-field">
+          <div class="detail-field-label">Attorney</div>
+          <div class="detail-field-value">
+            <% if (caseData.attorney) { %>
+              <div style="display: flex; align-items: center; gap: 10px;">
+                <div class="sidebar-user-avatar" style="width: 28px; height: 28px; font-size: 10px;">
+                  <%= caseData.attorney.full_name.charAt(0).toUpperCase() %>
+                </div>
+                <div>
+                  <div style="font-size: 13px; font-weight: 500;"><%= caseData.attorney.full_name %></div>
+                  <% if (caseData.attorney.firm_name) { %>
+                    <div class="text-sm text-muted"><%= caseData.attorney.firm_name %></div>
+                  <% } %>
+                </div>
+              </div>
+            <% } else { %>
+              <span class="text-sm text-muted">Not assigned</span>
+            <% } %>
+          </div>
+        </div>
+
+        <div class="detail-field" style="margin-bottom: 0;">
+          <div class="detail-field-label">Client</div>
+          <div class="detail-field-value">
+            <% if (caseData.client) { %>
+              <div style="display: flex; align-items: center; gap: 10px;">
+                <div class="client-avatar" style="width: 28px; height: 28px; font-size: 10px;">
+                  <%= caseData.client.full_name.charAt(0).toUpperCase() %>
+                </div>
+                <div style="font-size: 13px; font-weight: 500;"><%= caseData.client.full_name %></div>
+              </div>
+            <% } else { %>
+              <span class="text-sm text-muted">Not assigned</span>
+            <% } %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div style="margin-top: 24px;">
+  <a href="/cases" class="btn btn-secondary">← Back to Cases</a>
+</div>
