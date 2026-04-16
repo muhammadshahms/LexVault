@@ -1608,3 +1608,13 @@ img { max-width: 100%; display: block; }
 .sidebar-overlay.active {
   display: block;
 }
+
+/* ── SVG Icons ──────────────────────────────────────────────── */
+svg {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.sidebar-link-icon svg, .stat-icon svg, .empty-state-icon svg {
+  vertical-align: middle;
+}

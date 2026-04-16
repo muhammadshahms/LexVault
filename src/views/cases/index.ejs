@@ -11,7 +11,7 @@
 <!-- Filter Bar -->
 <form action="/cases" method="GET" class="filter-bar">
   <div class="search-input-wrapper">
-    <span class="search-icon">🔍</span>
+    <span class="search-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></span>
     <input type="text" name="search" class="form-input" placeholder="Search cases..." value="<%= search %>">
   </div>
   <select name="status" class="form-select filter-select">
@@ -77,9 +77,9 @@
             <% if (currentUser.role !== 'client') { %>
               <td>
                 <div style="display: flex; gap: 4px;">
-                  <a href="/cases/<%= c.id %>/edit" class="btn btn-ghost btn-sm" title="Edit">✏️</a>
+                  <a href="/cases/<%= c.id %>/edit" class="btn btn-ghost btn-sm" title="Edit"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg></a>
                   <form action="/cases/<%= c.id %>?_method=DELETE" method="POST" style="margin: 0;">
-                    <button type="submit" class="btn btn-ghost btn-sm" title="Delete" data-confirm="Are you sure you want to delete this case?" style="color: var(--danger);">🗑️</button>
+                    <button type="submit" class="btn btn-ghost btn-sm" title="Delete" data-confirm="Are you sure you want to delete this case?" style="color: var(--danger);"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg></button>
                   </form>
                 </div>
               </td>
@@ -92,7 +92,7 @@
 <% } else { %>
   <div class="card">
     <div class="empty-state">
-      <div class="empty-state-icon">📁</div>
+      <div class="empty-state-icon"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z"/></svg></div>
       <p class="empty-state-title">No cases found</p>
       <p class="empty-state-desc">
         <% if (search || statusFilter || typeFilter) { %>

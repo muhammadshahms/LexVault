@@ -25,10 +25,10 @@
           </div>
         </div>
         <span class="badge badge-<%= d.urgency %>">
-          <% if (d.urgency === 'critical') { %>🔴 Critical
-          <% } else if (d.urgency === 'warning') { %>🟡 Warning
-          <% } else if (d.urgency === 'upcoming') { %>🔵 Upcoming
-          <% } else { %>🟢 On Track<% } %>
+          <% if (d.urgency === 'critical') { %> Critical
+          <% } else if (d.urgency === 'warning') { %> Warning
+          <% } else if (d.urgency === 'upcoming') { %> Upcoming
+          <% } else { %> On Track<% } %>
         </span>
       </a>
     <% }); %>
@@ -36,7 +36,7 @@
 <% } else { %>
   <div class="card">
     <div class="empty-state">
-      <div class="empty-state-icon">✅</div>
+      <div class="empty-state-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg></div>
       <p class="empty-state-title">No upcoming deadlines</p>
       <p class="empty-state-desc">All your cases have no pending deadlines. Add deadlines to cases to track them here.</p>
       <a href="/cases" class="btn btn-primary btn-sm">View Cases</a>

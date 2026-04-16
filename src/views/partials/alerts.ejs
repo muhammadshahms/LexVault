@@ -1,7 +1,7 @@
 <% if (typeof success !== 'undefined' && success && success.length > 0) { %>
   <% success.forEach(function(msg) { %>
     <div class="alert alert-success">
-      <span>✅</span>
+      <span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg></span>
       <span><%= msg %></span>
       <button class="alert-close" aria-label="Close">&times;</button>
     </div>
@@ -11,7 +11,7 @@
 <% if (typeof error !== 'undefined' && error && error.length > 0) { %>
   <% error.forEach(function(msg) { %>
     <div class="alert alert-error">
-      <span>❌</span>
+      <span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg></span>
       <span><%= msg %></span>
       <button class="alert-close" aria-label="Close">&times;</button>
     </div>
@@ -21,7 +21,7 @@
 <% if (typeof info !== 'undefined' && info && info.length > 0) { %>
   <% info.forEach(function(msg) { %>
     <div class="alert alert-info">
-      <span>ℹ️</span>
+      <span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg></span>
       <span><%= msg %></span>
       <button class="alert-close" aria-label="Close">&times;</button>
     </div>
