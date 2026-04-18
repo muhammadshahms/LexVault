@@ -1,6 +1,6 @@
 const express = require('express');
 const path = require('path');
-const session = require('express-session');
+const cookieSession = require('cookie-session');
 const flash = require('connect-flash');
 const helmet = require('helmet');
 const morgan = require('morgan');
@@ -49,16 +49,13 @@ app.use(methodOverride('_method'));
 // Static files
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Session
-app.use(session({
-  secret: env.sessionSecret,
-  resave: false,
-  saveUninitialized: false,
-  cookie: {
-    secure: env.nodeEnv === 'production',
-    httpOnly: true,
-    maxAge: 24 * 60 * 60 * 1000 // 24 hours
-  }
+// Session using cookie-session (Perfect for Vercel Serverless! Data is stored IN the cookie)
+app.use(cookieSession({
+  name: 'lexvault:session',
+  keys: [env.sessionSecret],
+  maxAge: 24 * 60 * 60 * 1000, // 24 hours
+  secure: env.nodeEnv === 'production',
+  httpOnly: true
 }));
 
 // Flash messages
